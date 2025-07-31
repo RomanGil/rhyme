@@ -1,1 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Rhyme API 테스트</title>
+</head>
+<body>
+  <h1>🎤 힙합 라임 생성기</h1>
+  <input type="text" id="prompt" placeholder="한 줄 가사 입력" size="40">
+  <button onclick="sendPrompt()">라임 생성</button>
 
+  <h2>결과</h2>
+  <pre id="result">여기에 결과가 표시됩니다.</pre>
+
+  <script>
+    async function sendPrompt() {
+      const prompt = document.getElementById("prompt").value;
+      const res = await fetch("/api/rhyme", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText = data.result || data.error;
+    }
+  </script>
+</body>
+</html>
